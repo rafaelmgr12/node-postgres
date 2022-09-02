@@ -2,7 +2,20 @@ import { prisma } from "../../../config/prismaClient";
 import { ITaskDTO } from "../dtos/ITask";
 
 export class TaskRepository {
-  async indById({ id }: ITaskDTO) {
+  async createTask(task: ITaskDTO) {
+    return prisma.task.create({
+      data: task,
+    });
+  }
+  async save(task: ITaskDTO) {
+    return prisma.task.update({
+      where: {
+        id: task.id,
+      },
+      data: task,
+    });
+  }
+  async findById(id: number) {
     return prisma.task.findUnique({
       where: {
         id,

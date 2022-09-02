@@ -15,6 +15,13 @@ export class TaskRepository {
       data: task,
     });
   }
+  async delete(id: number) {
+    return prisma.task.delete({
+      where: {
+        id,
+      },
+    });
+  }
   async findById(id: number) {
     return prisma.task.findUnique({
       where: {

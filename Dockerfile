@@ -1,14 +1,22 @@
-FROM node:14.17.6
+FROM node:16
 
-WORKDIR /usr/app
+WORKDIR /app
 
-COPY package.json ./
+COPY package.json package-lock.json ./
+
+COPY package*.json ./
+
+COPY prisma ./prisma/
+
+COPY .env ./
+
+COPY tsconfig.json ./
 
 RUN npm install
 
-RUN npx prisma migrate dev --name init --preview-feature
-
 COPY . .
+
+RUN npx prisma generate
 
 EXPOSE 3333
 
